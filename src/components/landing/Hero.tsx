@@ -52,9 +52,13 @@ export function Hero() {
           className="max-w-2xl relative z-10"
         >
           <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
+            initial={{ opacity: 0, scale: 0.9, y: 0 }}
+            animate={{ opacity: 1, scale: 1, y: [-8, 8, -8] }}
+            transition={{ 
+              opacity: { delay: 0.2, duration: 0.5 },
+              scale: { delay: 0.2, duration: 0.5 },
+              y: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+            }}
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary font-semibold text-sm mb-6"
           >
             <Sparkles className="w-4 h-4" />
