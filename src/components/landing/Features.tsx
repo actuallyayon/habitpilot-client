@@ -21,7 +21,7 @@ export function Features() {
   ];
 
   return (
-    <section className="py-24 bg-neutral-light/30">
+    <section className="py-24 bg-background">
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex flex-col lg:flex-row gap-16 items-center">
           <div className="lg:w-1/2">
@@ -43,17 +43,17 @@ export function Features() {
             </div>
           </div>
           <div className="lg:w-1/2">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-white border border-card-border p-8">
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-card-bg border border-card-border p-8">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary" />
-              <h3 className="text-lg font-bold text-primary-dark mb-4">Weekly Replan Proposal</h3>
+              <h3 className="text-lg font-bold text-primary mb-4">Weekly Replan Proposal</h3>
               <div className="space-y-4">
-                <div className="p-4 rounded-lg bg-red-50 border border-red-100">
-                  <p className="text-sm text-red-800 font-medium mb-1">Issue Detected</p>
-                  <p className="text-sm text-red-600">You skipped "Read 20 pages" 4 times this week in the evening.</p>
+                <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
+                  <p className="text-sm text-red-600 dark:text-red-400 font-medium mb-1">Issue Detected</p>
+                  <p className="text-sm text-red-700 dark:text-red-300">You skipped "Read 20 pages" 4 times this week in the evening.</p>
                 </div>
-                <div className="p-4 rounded-lg bg-green-50 border border-green-100">
-                  <p className="text-sm text-green-800 font-medium mb-1">AI Adjustment</p>
-                  <p className="text-sm text-green-700">Let's swap the trigger to "During morning commute" and shrink the scope to "Read 10 pages".</p>
+                <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
+                  <p className="text-sm text-green-600 dark:text-green-400 font-medium mb-1">AI Adjustment</p>
+                  <p className="text-sm text-green-700 dark:text-green-300">Let's swap the trigger to "During morning commute" and shrink the scope to "Read 10 pages".</p>
                 </div>
                 <button className="w-full py-3 bg-primary text-white rounded-lg font-medium shadow-sm hover:bg-primary-dark transition-colors">
                   Approve New Plan

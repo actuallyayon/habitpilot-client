@@ -4,7 +4,7 @@ import { CheckIcon } from '@heroicons/react/24/solid';
 
 export function Pricing() {
   return (
-    <section id="pricing" className="py-24 bg-white">
+    <section id="pricing" className="py-24 bg-background">
       <div className="container mx-auto px-4 md:px-8 max-w-5xl">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Simple, transparent pricing.</h2>
@@ -12,10 +12,10 @@ export function Pricing() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          <Card className="p-8 border-card-border bg-white shadow-sm flex flex-col">
+          <Card className="p-8 border-card-border bg-card-bg shadow-sm flex flex-col">
             <CardHeader className="px-0 pt-0">
               <CardTitle className="text-2xl font-bold text-foreground">Free</CardTitle>
-              <div className="text-4xl font-extrabold mt-4 mb-2">$0<span className="text-lg text-neutral font-normal">/mo</span></div>
+              <div className="text-4xl font-extrabold mt-4 mb-2 text-foreground">$0<span className="text-lg text-neutral font-normal">/mo</span></div>
               <p className="text-sm text-neutral">Perfect for building your core routine.</p>
             </CardHeader>
             <CardContent className="px-0 flex-1 flex flex-col">
@@ -41,13 +41,13 @@ export function Pricing() {
             </CardContent>
           </Card>
 
-          <Card className="p-8 border-primary bg-primary-dark/5 shadow-xl relative overflow-hidden flex flex-col">
+          <Card className="p-8 border-primary bg-primary/5 dark:bg-primary/10 shadow-xl relative overflow-hidden flex flex-col">
             <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider">
               Popular
             </div>
             <CardHeader className="px-0 pt-0">
-              <CardTitle className="text-2xl font-bold text-primary-dark">Pro</CardTitle>
-              <div className="text-4xl font-extrabold mt-4 mb-2">$9<span className="text-lg text-neutral font-normal">/mo</span></div>
+              <CardTitle className="text-2xl font-bold text-primary">Pro</CardTitle>
+              <div className="text-4xl font-extrabold mt-4 mb-2 text-foreground">$9<span className="text-lg text-neutral font-normal">/mo</span></div>
               <p className="text-sm text-neutral">For total life optimization.</p>
             </CardHeader>
             <CardContent className="px-0 flex-1 flex flex-col">

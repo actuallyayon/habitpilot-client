@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Button } from '../ui/Button';
+import { ThemeToggle } from '../ui/ThemeToggle';
 
 export function Navbar() {
   // We'll stub out the auth state for now
@@ -12,7 +13,7 @@ export function Navbar() {
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white font-bold">
             H
           </div>
-          <span className="text-xl font-bold tracking-tight text-primary-dark">HabitPilot</span>
+          <span className="text-xl font-bold tracking-tight text-foreground">HabitPilot</span>
         </Link>
         
         <div className="hidden md:flex gap-6 items-center text-sm font-medium text-neutral">
@@ -33,12 +34,13 @@ export function Navbar() {
         </div>
         
         <div className="flex items-center gap-4">
+          <ThemeToggle />
           {!isAuthenticated ? (
             <>
               <Link href="/login" className="text-sm font-medium hover:text-primary hidden md:block">
                 Log in
               </Link>
-              <Button asChild size="sm">
+              <Button asChild size="sm" className="bg-primary hover:bg-primary-dark text-white">
                 <Link href="/register">Sign Up</Link>
               </Button>
             </>

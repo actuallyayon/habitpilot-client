@@ -19,12 +19,12 @@ export function FAQ() {
   ];
 
   return (
-    <section className="py-24 bg-neutral-light/30">
+    <section className="py-24 bg-background">
       <div className="container mx-auto px-4 md:px-8 max-w-3xl">
         <h2 className="text-3xl font-bold text-center text-foreground mb-12">Frequently Asked Questions</h2>
         <div className="space-y-6">
           {faqs.map((faq, i) => (
-            <div key={i} className="bg-white p-6 rounded-2xl border border-card-border shadow-sm">
+            <div key={i} className="bg-card-bg p-6 rounded-2xl border border-card-border shadow-sm">
               <h4 className="text-lg font-bold text-foreground mb-2">{faq.q}</h4>
               <p className="text-neutral leading-relaxed">{faq.a}</p>
             </div>

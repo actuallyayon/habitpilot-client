@@ -10,20 +10,20 @@ export function LiveStats() {
   }, []);
 
   return (
-    <section className="py-20 bg-primary-dark text-white">
+    <section className="py-20 bg-primary/10 border-y border-primary/20">
       <div className="container mx-auto px-4 md:px-8">
-        <div className="grid md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/20">
+        <div className="grid md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-primary/20">
           <div className="pt-4 md:pt-0">
-            <div className="text-4xl md:text-5xl font-extrabold mb-2">{stats.plans.toLocaleString()}+</div>
-            <div className="text-primary-light font-medium uppercase tracking-widest text-sm">Active Plans</div>
+            <div className="text-4xl md:text-5xl font-extrabold mb-2 text-primary-dark dark:text-primary-light">{stats.plans.toLocaleString()}+</div>
+            <div className="text-primary font-medium uppercase tracking-widest text-sm">Active Plans</div>
           </div>
           <div className="pt-8 md:pt-0">
-            <div className="text-4xl md:text-5xl font-extrabold mb-2">{stats.checkins.toLocaleString()}</div>
-            <div className="text-primary-light font-medium uppercase tracking-widest text-sm">Check-ins Logged</div>
+            <div className="text-4xl md:text-5xl font-extrabold mb-2 text-primary-dark dark:text-primary-light">{stats.checkins.toLocaleString()}</div>
+            <div className="text-primary font-medium uppercase tracking-widest text-sm">Check-ins Logged</div>
           </div>
           <div className="pt-8 md:pt-0">
-            <div className="text-4xl md:text-5xl font-extrabold mb-2">+{stats.consistency}%</div>
-            <div className="text-primary-light font-medium uppercase tracking-widest text-sm">Avg Consistency Boost</div>
+            <div className="text-4xl md:text-5xl font-extrabold mb-2 text-primary-dark dark:text-primary-light">{stats.consistency}%</div>
+            <div className="text-primary font-medium uppercase tracking-widest text-sm">Avg. Consistency</div>
           </div>
         </div>
       </div>

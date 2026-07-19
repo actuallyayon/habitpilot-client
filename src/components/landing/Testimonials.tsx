@@ -20,16 +20,16 @@ export function Testimonials() {
   ];
 
   return (
-    <section className="py-24 bg-neutral-light/20">
+    <section className="py-24 bg-tertiary">
       <div className="container mx-auto px-4 md:px-8">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-16">Don't take our word for it.</h2>
         <div className="grid md:grid-cols-3 gap-8">
           {testimonials.map((t, i) => (
-            <Card key={i} className="p-6 bg-white border-card-border shadow-sm">
+            <Card key={i} className="p-6 bg-card-bg border-card-border shadow-md">
               <CardContent className="p-0 flex flex-col h-full justify-between">
                 <p className="text-foreground leading-relaxed italic mb-6">"{t.quote}"</p>
                 <div>
-                  <div className="font-bold text-primary-dark">{t.name}</div>
+                  <div className="font-bold text-primary">{t.name}</div>
                   <div className="text-sm text-neutral">{t.role}</div>
                 </div>
               </CardContent>
