@@ -29,6 +29,8 @@ export default function DashboardLayout({
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Check-In', href: '/check-in', icon: CheckSquare },
     { name: 'Onboarding', href: '/onboarding', icon: Target },
+    { name: 'My Plan', href: '/plan', icon: Target },
+    { name: 'Manage Plans', href: '/plan/manage', icon: Settings },
   ];
 
   return (
