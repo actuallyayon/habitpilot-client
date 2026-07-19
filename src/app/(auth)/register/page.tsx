@@ -41,15 +41,15 @@ export default function Register() {
           {error && <div className="text-red-500 text-sm text-center">{error}</div>}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">Name</label>
-            <input type="text" required value={name} onChange={e => setName(e.target.value)} className="w-full p-3 rounded-md bg-background border border-card-border focus:ring-2 focus:ring-primary focus:outline-none text-foreground" />
+            <input type="text" required value={name} onChange={e => setName(e.target.value)} placeholder="Enter your name" className="w-full p-3 rounded-md bg-background border border-card-border focus:ring-2 focus:ring-primary focus:outline-none text-foreground" />
           </div>
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">Email address</label>
-            <input type="email" required value={email} onChange={e => setEmail(e.target.value)} className="w-full p-3 rounded-md bg-background border border-card-border focus:ring-2 focus:ring-primary focus:outline-none text-foreground" />
+            <input type="email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email" className="w-full p-3 rounded-md bg-background border border-card-border focus:ring-2 focus:ring-primary focus:outline-none text-foreground" />
           </div>
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">Password</label>
-            <input type="password" required value={password} onChange={e => setPassword(e.target.value)} className="w-full p-3 rounded-md bg-background border border-card-border focus:ring-2 focus:ring-primary focus:outline-none text-foreground" />
+            <input type="password" required value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter your password" className="w-full p-3 rounded-md bg-background border border-card-border focus:ring-2 focus:ring-primary focus:outline-none text-foreground" />
           </div>
           <Button type="submit" className="w-full" size="lg">Sign up</Button>
         </form>
