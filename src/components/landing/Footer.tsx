@@ -14,10 +14,10 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-card-border pt-12">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="flex h-6 w-6 items-center justify-center rounded bg-primary text-white font-bold text-xs">
-                H
-              </div>
-              <span className="font-bold text-foreground">HabitPilot</span>
+              <span className="text-xl font-bold tracking-tight">
+                <span className="text-primary">Habit</span>
+                <span className="text-foreground">Pilot</span>
+              </span>
             </Link>
             <p className="text-sm text-neutral">The first habit tracker that adapts to you, not the other way around.</p>
           </div>
