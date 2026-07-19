@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { api } from '@/contexts/AuthContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
@@ -8,10 +8,36 @@ import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 
 export default function Dashboard() {
-  const { user } = useAuth();
+  const { user, login } = useAuth();
   const [plans, setPlans] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const { data } = await api.post('/upload/avatar', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      if (user) {
+        const updatedUser = { ...user, avatarUrl: data.url };
+        login(localStorage.getItem('accessToken') || '', updatedUser);
+      }
+    } catch (error) {
+      console.error('Failed to upload avatar', error);
+      alert('Failed to upload avatar');
+    } finally {
+      setUploading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchPlans = async () => {
@@ -47,9 +73,24 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-extrabold text-foreground mb-2">Welcome back, {user?.name}!</h1>
-        <p className="text-neutral">Here is your current AI-generated Habit Stack.</p>
+      <div className="flex items-center gap-6">
+        <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+          <div className="h-20 w-20 rounded-full bg-primary flex items-center justify-center text-white text-2xl font-bold overflow-hidden border-4 border-card-border shadow-lg">
+            {user?.avatarUrl ? (
+              <img src={user.avatarUrl} alt="Avatar" className="h-full w-full object-cover" />
+            ) : (
+              user?.name?.charAt(0).toUpperCase() || 'U'
+            )}
+            <div className="absolute inset-0 bg-black/50 hidden group-hover:flex items-center justify-center transition-all">
+              <span className="text-xs font-medium text-white">{uploading ? '...' : 'Upload'}</span>
+            </div>
+          </div>
+          <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleAvatarUpload} />
+        </div>
+        <div>
+          <h1 className="text-3xl font-extrabold text-foreground mb-2">Welcome back, {user?.name}!</h1>
+          <p className="text-neutral">Here is your current AI-generated Habit Stack.</p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
