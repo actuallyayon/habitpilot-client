@@ -21,11 +21,13 @@ export function Navbar() {
         <div className="hidden md:flex gap-6 items-center text-sm font-medium text-neutral">
           {!isAuthenticated ? (
             <>
+              <Link href="/explore" className="hover:text-primary transition-colors">Explore Plans</Link>
               <Link href="/#how-it-works" className="hover:text-primary transition-colors">How It Works</Link>
               <Link href="/#pricing" className="hover:text-primary transition-colors">Pricing</Link>
             </>
           ) : (
             <>
+              <Link href="/explore" className="hover:text-primary transition-colors text-primary font-bold">Explore</Link>
               <Link href="/dashboard" className="hover:text-primary transition-colors">Dashboard</Link>
               <Link href="/check-in" className="hover:text-primary transition-colors">Today's Check-in</Link>
               <Link href="/plan" className="hover:text-primary transition-colors">My Plan</Link>
