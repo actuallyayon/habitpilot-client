@@ -1,9 +1,14 @@
+'use client';
 import { Button } from '../ui/Button';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { CheckIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
+import { useAuth } from '@/contexts/AuthContext';
 
 export function Pricing() {
+  const { user } = useAuth();
+  const upgradeHref = user ? '/upgrade' : '/register';
+
   return (
     <section id="pricing" className="py-24 bg-background">
       <div className="container mx-auto px-4 md:px-8 max-w-5xl">
@@ -39,7 +44,7 @@ export function Pricing() {
                 </li>
               </ul>
               <Button asChild variant="outline" className="w-full" size="lg">
-                <Link href="/register">Get Started Free</Link>
+                <Link href={user ? "/dashboard" : "/register"}>{user ? "Go to Dashboard" : "Get Started Free"}</Link>
               </Button>
             </CardContent>
           </Card>
@@ -73,7 +78,7 @@ export function Pricing() {
                 </li>
               </ul>
               <Button asChild className="w-full" size="lg">
-                <Link href="/register">Upgrade to Pro</Link>
+                <Link href={upgradeHref}>Upgrade to Pro</Link>
               </Button>
             </CardContent>
           </Card>
