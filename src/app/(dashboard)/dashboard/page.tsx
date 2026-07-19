@@ -1,112 +1,125 @@
 'use client';
+import { useEffect, useState } from 'react';
+import { api } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { useRouter } from 'next/navigation';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { CheckCircleIcon, SparklesIcon, CalendarIcon } from '@heroicons/react/24/outline';
-
-const data = [
-  { name: 'Mon', consistency: 40 },
-  { name: 'Tue', consistency: 60 },
-  { name: 'Wed', consistency: 50 },
-  { name: 'Thu', consistency: 80 },
-  { name: 'Fri', consistency: 75 },
-  { name: 'Sat', consistency: 90 },
-  { name: 'Sun', consistency: 100 },
-];
 
 export default function Dashboard() {
+  const { user } = useAuth();
+  const [plans, setPlans] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        const { data } = await api.get('/agent/plans');
+        setPlans(data);
+      } catch (error) {
+        console.error('Failed to fetch plans', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPlans();
+  }, []);
+
+  if (loading) {
+    return <div className="flex justify-center items-center h-64"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div></div>;
+  }
+
+  if (plans.length === 0) {
+    return (
+      <div className="text-center py-20">
+        <h2 className="text-3xl font-extrabold text-foreground mb-4">Welcome to HabitPilot, {user?.name}!</h2>
+        <p className="text-lg text-neutral mb-8">You haven't generated a habit plan yet. Let our AI coach design one for you.</p>
+        <Button asChild size="lg">
+          <Link href="/onboarding">Create Your First Plan</Link>
+        </Button>
+      </div>
+    );
+  }
+
+  const activePlan = plans[0]; // Most recent active plan
+
   return (
     <div className="space-y-8">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Welcome back, Jane.</h1>
-          <p className="text-neutral">Here is how your current habit stack is performing.</p>
-        </div>
-        <div className="flex gap-2">
-          <Button asChild variant="outline">
-            <Link href="/plan">Edit Plan</Link>
-          </Button>
-          <Button asChild>
-            <Link href="/check-in">Log Today</Link>
-          </Button>
-        </div>
+      <div>
+        <h1 className="text-3xl font-extrabold text-foreground mb-2">Welcome back, {user?.name}!</h1>
+        <p className="text-neutral">Here is your current AI-generated Habit Stack.</p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-6">
-        <Card className="border-card-border shadow-sm">
-          <CardContent className="p-6 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-              <SparklesIcon className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-foreground">12 Days</div>
-              <div className="text-sm text-neutral">Current Streak</div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="border-card-border shadow-sm">
-          <CardContent className="p-6 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary-dark">
-              <CheckCircleIcon className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-foreground">84%</div>
-              <div className="text-sm text-neutral">Weekly Consistency</div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="border-card-border shadow-sm">
-          <CardContent className="p-6 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
-              <CalendarIcon className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-foreground">3</div>
-              <div className="text-sm text-neutral">Active Habits</div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid md:grid-cols-3 gap-8">
-        <div className="md:col-span-2 space-y-8">
-          <Card className="border-card-border shadow-sm">
-            <CardHeader>
-              <CardTitle>Consistency Trend</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="h-64 w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={data}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e5e5" />
-                    <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                    <YAxis axisLine={false} tickLine={false} />
-                    <Tooltip cursor={{ stroke: '#94a3b8', strokeWidth: 1, strokeDasharray: '3 3' }} />
-                    <Line type="monotone" dataKey="consistency" stroke="#16a34a" strokeWidth={3} dot={{ r: 4, fill: '#16a34a' }} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </CardContent>
-          </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-6">
+          <h2 className="text-2xl font-bold text-foreground">Your Habit Stack</h2>
+          <div className="space-y-4">
+            {activePlan.habits.map((habit: any, index: number) => (
+              <Card key={index} className="border-l-4 border-l-primary shadow-sm">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-xl font-bold text-foreground">{habit.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                    <div>
+                      <span className="text-xs font-bold uppercase text-neutral tracking-wider block mb-1">Trigger</span>
+                      <p className="text-foreground bg-primary/5 p-2 rounded-md font-medium text-sm border border-primary/10">{habit.trigger}</p>
+                    </div>
+                    <div>
+                      <span className="text-xs font-bold uppercase text-neutral tracking-wider block mb-1">Min Version</span>
+                      <p className="text-foreground bg-secondary/10 dark:bg-secondary/20 p-2 rounded-md font-medium text-sm">{habit.minVersion}</p>
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <span className="text-xs font-bold uppercase text-neutral tracking-wider block mb-1">AI Reasoning</span>
+                    <p className="text-sm text-neutral italic">"{habit.reason}"</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          
+          <div className="flex justify-end pt-4">
+            <Button asChild size="lg">
+              <Link href="/check-in">Go to Daily Check-in</Link>
+            </Button>
+          </div>
         </div>
 
         <div className="space-y-6">
-          <Card className="border-card-border shadow-sm bg-primary/5">
+          <Card className="bg-card-bg shadow-sm">
             <CardHeader>
-              <CardTitle className="text-lg text-primary-dark">Agent Insights</CardTitle>
+              <CardTitle className="text-lg font-bold">Plan Profile</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="p-3 bg-white rounded-lg border border-primary/20 text-sm text-foreground">
-                <span className="font-bold">Daily Note:</span> Great job sticking to the morning routine! Tomorrow might be rainy, maybe do indoor yoga instead of a run?
+              <div>
+                <span className="text-xs font-bold uppercase text-neutral block mb-1">Your Goals</span>
+                <ul className="list-disc list-inside text-sm text-foreground">
+                  {activePlan.goals.map((g: string, i: number) => (
+                    <li key={i}>{g}</li>
+                  ))}
+                </ul>
               </div>
-              <div className="p-3 bg-white rounded-lg border border-primary/20 text-sm text-foreground">
-                <span className="font-bold flex items-center gap-1 text-secondary-dark"><SparklesIcon className="w-4 h-4"/> Weekly Replan Ready</span> 
-                I've noticed friction with your reading habit. Review my proposed changes.
-                <Button asChild size="sm" variant="outline" className="w-full mt-3">
-                  <Link href="/replan">Review Proposal</Link>
-                </Button>
+              <div>
+                <span className="text-xs font-bold uppercase text-neutral block mb-1">Known Obstacles</span>
+                <p className="text-sm text-foreground">{activePlan.obstacles || 'None provided'}</p>
               </div>
+              <div>
+                <span className="text-xs font-bold uppercase text-neutral block mb-1">Daily Commitment</span>
+                <p className="text-sm text-foreground font-semibold">{activePlan.availableMinutesPerDay} minutes</p>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-primary/5 border-primary/20 shadow-sm">
+            <CardContent className="p-6 text-center">
+              <h3 className="font-bold text-primary mb-2">Need a reset?</h3>
+              <p className="text-sm text-neutral mb-4">If this plan isn't working for you, you can always generate a new one.</p>
+              <Button asChild variant="outline" className="w-full border-primary text-primary hover:bg-primary/10">
+                <Link href="/onboarding">Draft New Plan</Link>
+              </Button>
             </CardContent>
           </Card>
         </div>
