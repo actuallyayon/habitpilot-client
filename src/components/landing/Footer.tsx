@@ -16,7 +16,7 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-card-border pt-12">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <span className="text-xl font-bold tracking-tight">
+              <span className="text-2xl font-black tracking-tight">
                 <span className="text-primary">Habit</span>
                 <span className="text-foreground">Pilot</span>
               </span>
