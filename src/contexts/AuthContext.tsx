@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 import { useRouter, usePathname } from 'next/navigation';
+import { safeStorage } from '@/utils/storage';
 
 export interface User {
   _id: string;
@@ -44,8 +45,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    const storedUser = localStorage.getItem('user');
+    const token = safeStorage.getItem('accessToken');
+    const storedUser = safeStorage.getItem('user');
 
     if (token && storedUser) {
       setUser(JSON.parse(storedUser));
@@ -68,7 +69,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
               { withCredentials: true }
             );
             const newToken = data.accessToken;
-            localStorage.setItem('accessToken', newToken);
+            safeStorage.setItem('accessToken', newToken);
             api.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
             originalRequest.headers['Authorization'] = `Bearer ${newToken}`;
             return api(originalRequest);
@@ -86,14 +87,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = (token: string, userData: User) => {
-    localStorage.setItem('accessToken', token);
-    localStorage.setItem('user', JSON.stringify(userData));
+    safeStorage.setItem('accessToken', token);
+    safeStorage.setItem('user', JSON.stringify(userData));
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     setUser(userData);
   };
 
   const updateUser = (userData: User) => {
-    localStorage.setItem('user', JSON.stringify(userData));
+    safeStorage.setItem('user', JSON.stringify(userData));
     setUser(userData);
   };
 
@@ -103,8 +104,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (e) {
       // ignore
     }
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('user');
+    safeStorage.removeItem('accessToken');
+    safeStorage.removeItem('user');
     delete api.defaults.headers.common['Authorization'];
     setUser(null);
     if (pathname !== '/' && pathname !== '/login' && pathname !== '/register') {

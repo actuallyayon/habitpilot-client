@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 import { api } from '@/contexts/AuthContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
+import { safeStorage } from '@/utils/storage';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
@@ -29,7 +30,7 @@ export default function Dashboard() {
       });
       if (user) {
         const updatedUser = { ...user, avatarUrl: data.url };
-        login(localStorage.getItem('accessToken') || '', updatedUser);
+        login(safeStorage.getItem('accessToken') || '', updatedUser);
       }
     } catch (error) {
       console.error('Failed to upload avatar', error);
