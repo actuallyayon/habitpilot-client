@@ -11,17 +11,21 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError('');
     try {
       const { data } = await api.post('/auth/register', { name, email, password });
       login(data.accessToken, { _id: data._id, name: data.name, email: data.email, plan: data.plan });
       router.push('/onboarding');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Registration failed');
+      setIsLoading(false);
     }
   };
 
@@ -51,7 +55,14 @@ export default function Register() {
             <label className="block text-sm font-medium text-foreground mb-2">Password</label>
             <input type="password" required value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter your password" className="w-full p-3 rounded-md bg-background border border-card-border focus:ring-2 focus:ring-primary focus:outline-none text-foreground" />
           </div>
-          <Button type="submit" className="w-full" size="lg">Sign up</Button>
+          <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
+            {isLoading ? (
+              <span className="flex items-center gap-2">
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Creating account...
+              </span>
+            ) : 'Sign up'}
+          </Button>
         </form>
         <p className="mt-6 text-center text-sm text-neutral">
           Already have an account? <Link href="/login" className="text-primary hover:underline">Log in</Link>
