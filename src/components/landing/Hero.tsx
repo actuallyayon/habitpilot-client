@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { Check } from 'lucide-react';
+import Link from 'next/link';
 
 export function Hero() {
   const [typedReaction, setTypedReaction] = useState('');
@@ -37,8 +38,12 @@ export function Hero() {
             HabitPilot doesn't just track your habits. It designs a personalized routine, adapts it based on your actual performance, and gives you actionable coaching every single day.
           </p>
           <div className="flex gap-4">
-            <Button size="lg" className="text-lg px-8 bg-primary hover:bg-primary-dark text-white">Start for Free</Button>
-            <Button size="lg" variant="outline" className="text-lg px-8 border-primary text-primary hover:bg-primary/10">See How it Works</Button>
+            <Button asChild size="lg" className="text-lg px-8 bg-primary hover:bg-primary-dark text-white">
+              <Link href="/register">Start for Free</Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="text-lg px-8 border-primary text-primary hover:bg-primary/10">
+              <Link href="/#how-it-works">See How it Works</Link>
+            </Button>
           </div>
         </motion.div>
 

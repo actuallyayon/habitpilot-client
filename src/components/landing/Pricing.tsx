@@ -1,6 +1,7 @@
 import { Button } from '../ui/Button';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { CheckIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
 
 export function Pricing() {
   return (
@@ -37,7 +38,9 @@ export function Pricing() {
                   <span className="text-foreground">Basic Streak Tracking</span>
                 </li>
               </ul>
-              <Button variant="outline" className="w-full" size="lg">Get Started Free</Button>
+              <Button asChild variant="outline" className="w-full" size="lg">
+                <Link href="/register">Get Started Free</Link>
+              </Button>
             </CardContent>
           </Card>
 
@@ -69,7 +72,9 @@ export function Pricing() {
                   <span className="text-foreground">Priority Agent Processing</span>
                 </li>
               </ul>
-              <Button className="w-full" size="lg">Upgrade to Pro</Button>
+              <Button asChild className="w-full" size="lg">
+                <Link href="/register">Upgrade to Pro</Link>
+              </Button>
             </CardContent>
           </Card>
         </div>

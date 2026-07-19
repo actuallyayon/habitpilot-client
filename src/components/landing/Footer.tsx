@@ -8,7 +8,9 @@ export function Footer() {
         <div className="max-w-3xl mx-auto text-center mb-24">
           <h2 className="text-4xl md:text-5xl font-extrabold text-foreground mb-6">Ready to finally make it stick?</h2>
           <p className="text-xl text-neutral mb-8">Join thousands of users who have stopped feeling guilty about missed days and started building adaptable, lifelong habits.</p>
-          <Button size="lg" className="text-lg px-10 h-14 bg-primary hover:bg-primary-dark text-white">Build Your First Habit Plan</Button>
+          <Button asChild size="lg" className="text-lg px-10 h-14 bg-primary hover:bg-primary-dark text-white">
+            <Link href="/register">Build Your First Habit Plan</Link>
+          </Button>
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-card-border pt-12">
