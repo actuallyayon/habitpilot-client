@@ -5,8 +5,10 @@ import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { Check, Sparkles } from 'lucide-react';
 import Link from 'next/link';
+import { useAuth } from '@/contexts/AuthContext';
 
 export function Hero() {
+  const { user } = useAuth();
   const [typedReaction, setTypedReaction] = useState('');
   const fullReaction = "Great job nailing the morning jog! Since you felt energetic, let's push to 20 minutes next week!";
 
@@ -73,8 +75,8 @@ export function Hero() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Button asChild size="lg" className="text-lg px-8 py-7 bg-primary hover:bg-primary-dark text-white shadow-[0_0_40px_-10px_rgba(37,99,235,0.5)] hover:shadow-[0_0_60px_-15px_rgba(37,99,235,0.7)] transition-all duration-300 rounded-xl relative overflow-hidden group">
-              <Link href="/register">
-                <span className="relative z-10">Start for Free</span>
+              <Link href={user ? "/dashboard" : "/register"}>
+                <span className="relative z-10">{user ? "Go to Dashboard" : "Start for Free"}</span>
                 <div className="absolute inset-0 bg-white/20 translate-y-[100%] group-hover:translate-y-[0%] transition-transform duration-300 ease-in-out" />
               </Link>
             </Button>

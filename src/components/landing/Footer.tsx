@@ -1,7 +1,11 @@
+'use client';
 import Link from 'next/link';
 import { Button } from '../ui/Button';
+import { useAuth } from '@/contexts/AuthContext';
 
 export function Footer() {
+  const { user } = useAuth();
+
   return (
     <footer className="bg-card-bg border-t border-card-border pt-24 pb-12">
       <div className="container mx-auto px-4 md:px-8">
@@ -9,7 +13,7 @@ export function Footer() {
           <h2 className="text-4xl md:text-5xl font-extrabold text-foreground mb-6">Ready to finally make it stick?</h2>
           <p className="text-xl text-neutral mb-8">Join thousands of users who have stopped feeling guilty about missed days and started building adaptable, lifelong habits.</p>
           <Button asChild size="lg" className="text-lg px-10 h-14 bg-primary hover:bg-primary-dark text-white">
-            <Link href="/register">Build Your First Habit Plan</Link>
+            <Link href={user ? "/dashboard" : "/register"}>Build Your First Habit Plan</Link>
           </Button>
         </div>
         
