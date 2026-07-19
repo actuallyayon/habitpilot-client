@@ -1,10 +1,12 @@
+'use client';
 import Link from 'next/link';
 import { Button } from '../ui/Button';
 import { ThemeToggle } from '../ui/ThemeToggle';
+import { useAuth } from '@/contexts/AuthContext';
 
 export function Navbar() {
-  // We'll stub out the auth state for now
-  const isAuthenticated = false;
+  const { user } = useAuth();
+  const isAuthenticated = !!user;
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-card-border bg-background/80 backdrop-blur-md">
@@ -45,8 +47,11 @@ export function Navbar() {
               </Button>
             </>
           ) : (
-            <Link href="/profile">
-              <div className="h-8 w-8 rounded-full bg-tertiary"></div>
+            <Link href="/dashboard" className="flex items-center gap-2 font-bold text-sm hover:text-primary transition-colors">
+              <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-white">
+                {user?.name?.charAt(0).toUpperCase() || 'U'}
+              </div>
+              <span className="hidden md:block">Dashboard</span>
             </Link>
           )}
         </div>
