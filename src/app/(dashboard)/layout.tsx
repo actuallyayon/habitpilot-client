@@ -3,7 +3,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import Link from 'next/link';
-import { LayoutDashboard, CheckSquare, Target, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, CheckSquare, Target, Settings, LogOut, ShieldAlert } from 'lucide-react';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 export default function DashboardLayout({
@@ -32,6 +32,10 @@ export default function DashboardLayout({
     { name: 'My Plan', href: '/plan', icon: Target },
     { name: 'Manage Plans', href: '/plan/manage', icon: Settings },
   ];
+
+  if (user && user.role === 'admin') {
+    navItems.push({ name: 'Admin Panel', href: '/admin', icon: ShieldAlert });
+  }
 
   return (
     <div className="min-h-screen bg-background flex flex-col md:flex-row">

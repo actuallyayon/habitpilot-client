@@ -20,7 +20,7 @@ export default function Register() {
     try {
       setIsLoading(true);
       const { data } = await api.post('/auth/google', { token: credentialResponse.credential });
-      login(data.accessToken, { _id: data._id, name: data.name, email: data.email, plan: data.plan, avatarUrl: data.avatarUrl });
+      login(data.accessToken, { _id: data._id, name: data.name, email: data.email, plan: data.plan, role: data.role, avatarUrl: data.avatarUrl });
       router.push('/dashboard');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Google registration failed');
@@ -34,7 +34,7 @@ export default function Register() {
     setError('');
     try {
       const { data } = await api.post('/auth/register', { name, email, password });
-      login(data.accessToken, { _id: data._id, name: data.name, email: data.email, plan: data.plan });
+      login(data.accessToken, { _id: data._id, name: data.name, email: data.email, plan: data.plan, role: data.role });
       router.push('/onboarding');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Registration failed');

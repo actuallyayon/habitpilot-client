@@ -8,6 +8,7 @@ export interface User {
   name: string;
   email: string;
   plan: string;
+  role: string;
   avatarUrl?: string;
 }
 

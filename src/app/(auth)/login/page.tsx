@@ -21,7 +21,7 @@ export default function Login() {
     // Ensure the backend has a dummy user or just attempt with a fixed credential
     try {
       const { data } = await api.post('/auth/login', { email: 'demo@habitpilot.com', password: 'password123' });
-      login(data.accessToken, { _id: data._id, name: data.name, email: data.email, plan: data.plan, avatarUrl: data.avatarUrl });
+      login(data.accessToken, { _id: data._id, name: data.name, email: data.email, plan: data.plan, role: data.role, avatarUrl: data.avatarUrl });
       router.push('/dashboard');
     } catch (err: any) {
       setError('Demo login failed. Ensure a user demo@habitpilot.com with password123 exists.');
@@ -33,7 +33,7 @@ export default function Login() {
     try {
       setIsLoading(true);
       const { data } = await api.post('/auth/google', { token: credentialResponse.credential });
-      login(data.accessToken, { _id: data._id, name: data.name, email: data.email, plan: data.plan, avatarUrl: data.avatarUrl });
+      login(data.accessToken, { _id: data._id, name: data.name, email: data.email, plan: data.plan, role: data.role, avatarUrl: data.avatarUrl });
       router.push('/dashboard');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Google login failed');
@@ -47,7 +47,7 @@ export default function Login() {
     setError('');
     try {
       const { data } = await api.post('/auth/login', { email, password });
-      login(data.accessToken, { _id: data._id, name: data.name, email: data.email, plan: data.plan });
+      login(data.accessToken, { _id: data._id, name: data.name, email: data.email, plan: data.plan, role: data.role });
       router.push('/dashboard');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Login failed');
