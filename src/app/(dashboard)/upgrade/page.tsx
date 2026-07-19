@@ -11,7 +11,13 @@ export default function UpgradePage() {
       try {
         const { data } = await api.post('/stripe/create-checkout-session');
         if (data.url) {
-          window.location.href = data.url;
+          if (data.url.startsWith('http')) {
+            window.location.href = data.url;
+          } else {
+            router.push(data.url);
+          }
+        } else {
+          router.push('/dashboard');
         }
       } catch (error) {
         console.error('Failed to create checkout session', error);
