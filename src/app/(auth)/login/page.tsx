@@ -5,6 +5,7 @@ import { api } from '@/contexts/AuthContext';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
+import { GoogleLogin } from '@react-oauth/google';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -13,6 +14,32 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const router = useRouter();
+
+  const handleDemoLogin = async () => {
+    setIsLoading(true);
+    setError('');
+    // Ensure the backend has a dummy user or just attempt with a fixed credential
+    try {
+      const { data } = await api.post('/auth/login', { email: 'demo@habitpilot.com', password: 'password123' });
+      login(data.accessToken, { _id: data._id, name: data.name, email: data.email, plan: data.plan, avatarUrl: data.avatarUrl });
+      router.push('/dashboard');
+    } catch (err: any) {
+      setError('Demo login failed. Ensure a user demo@habitpilot.com with password123 exists.');
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    try {
+      setIsLoading(true);
+      const { data } = await api.post('/auth/google', { token: credentialResponse.credential });
+      login(data.accessToken, { _id: data._id, name: data.name, email: data.email, plan: data.plan, avatarUrl: data.avatarUrl });
+      router.push('/dashboard');
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Google login failed');
+      setIsLoading(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,6 +85,31 @@ export default function Login() {
               </span>
             ) : 'Log in'}
           </Button>
+          
+          <Button type="button" variant="outline" className="w-full" onClick={handleDemoLogin} disabled={isLoading}>
+            Demo Login
+          </Button>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-card-border" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-card-bg px-2 text-neutral">Or continue with</span>
+            </div>
+          </div>
+
+          <div className="flex justify-center">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={() => setError('Google login failed')}
+              useOneTap
+              theme="outline"
+              size="large"
+              shape="rectangular"
+              width="350"
+            />
+          </div>
         </form>
         <p className="mt-6 text-center text-sm text-neutral">
           Don't have an account? <Link href="/register" className="text-primary hover:underline">Sign up</Link>
