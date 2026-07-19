@@ -93,20 +93,3 @@ NEXT_PUBLIC_GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
 npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser.
-
----
-
-## 📜 Key Commit History (10+ Meaningful Commits)
-
-1. `feat: add client Profile page with avatar upload and navbar dropdown menu` — Implemented the profile details edit form, password change inputs, memory-storage avatar upload using ImgBB API, and converted the static navbar link to an interactive user dropdown menu.
-2. `fix: dynamically route Hero and Footer CTA buttons to dashboard if user is authenticated` — Connected the main landing page Hero and Footer CTA buttons to the Auth Context to dynamically route logged-in users directly to `/dashboard` instead of showing `/register`.
-3. `feat: add client-side Admin Panel page, route layout link, and integrate role support` — Added a premium, visual dashboard page containing statistics cards, a Recharts signup trend graph, and an account management table supporting block/unblock actions and subscription tier adjustments.
-4. `fix: handle relative urls in upgrade redirect` — Resolved Vercel deployment checkout routing paths to support correct URL redirection formats.
-5. `feat: add additional static pages for rubric` — Implemented Terms of Service, Privacy Policy, About Us, and Contact Us static layouts.
-6. `feat: add frontend add and manage plan pages` — Added visual plan setup and deletion dashboard forms.
-7. `feat: add explore and plan details pages` — Implemented public explore page to review generated AI habit routines.
-8. `feat: add Google Login and Demo Login to fulfill auth rubric` — Integrated `@react-oauth/google` buttons and demo credential handlers.
-9. `feat: add user avatar upload feature using ImgBB API` — Configured image selection and upload triggers.
-10. `UI: add cursor-pointer to buttons and loading states to auth forms` — Enhanced visual feedback and usability.
-11. `UI: add counter animation to LiveStats and floating animation to Hero badge` — Configured dashboard counters and badge float styles.
-12. `UI: redesign landing page - add Plus Jakarta Sans, bold logos, dynamic animations and framer-motion` — Built a highly premium visual experience for the home landing page.
